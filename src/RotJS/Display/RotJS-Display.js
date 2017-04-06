@@ -22,3 +22,9 @@ exports.drawRaw = function (display, coord, string, color) {
     display.draw(coord.x, coord.y, string, color);
   };
 };
+
+exports.drawTextRaw = function (display, coord, string) {
+  return function() {
+    display.drawText(coord.x, coord.y, string);
+  };
+};

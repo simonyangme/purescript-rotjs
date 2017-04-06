@@ -6,6 +6,7 @@ module RotJS.Display (
   , initDisplay
   , setOptions
   , draw
+  , drawText
   , width
   , height
   , fontSize
@@ -18,7 +19,7 @@ module RotJS.Display (
 
 import Prelude
 import Control.Monad.Eff (Eff, kind Effect)
-import Data.Function.Uncurried (Fn4, runFn4, Fn2, runFn2)
+import Data.Function.Uncurried (Fn4, runFn4, Fn3, runFn3, Fn2, runFn2)
 import Data.Options (Option(), Options(), options, opt)
 import Data.Foreign (Foreign())
 
@@ -76,3 +77,12 @@ foreign import drawRaw ::
 
 draw :: forall eff. Display -> Coord -> String -> Color -> Eff (tty :: TTY | eff) Unit
 draw = runFn4 drawRaw
+
+foreign import drawTextRaw ::
+  forall eff. Fn3 Display
+                  Coord
+                  String
+                  (Eff (tty :: TTY | eff) Unit)
+
+drawText :: forall eff. Display -> Coord -> String -> Eff (tty :: TTY | eff) Unit
+drawText = runFn3 drawTextRaw
